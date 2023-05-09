@@ -16,7 +16,7 @@ public class HellospringApplication {
 
         ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
         WebServer webServer = serverFactory.getWebServer(servletContext -> {
-            servletContext.addServlet("frontcontroller",
+            servletContext.addServlet("dispatcherServlet",
                         new DispatcherServlet(applicationContext)
                     ).addMapping("/*");
         });
