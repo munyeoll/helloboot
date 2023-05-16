@@ -14,8 +14,6 @@ public class HelloApiTest {
     void helloApi() {
         // http -v GET ":8080/hello?name=String"
         TestRestTemplate rest = new TestRestTemplate();
-//        ResponseEntity<String> res =
-//                rest.getForEntity("http://localhost:8080/hello?name={name}", String.class, "Spring");
         ResponseEntity<String> res = rest.getForEntity("http://localhost:8080/hello?name={name}", String.class, "Spring");
 
         // status code 200
@@ -24,6 +22,13 @@ public class HelloApiTest {
         Assertions.assertThat(res.getHeaders().getFirst(HttpHeaders.CONTENT_TYPE)).startsWith(MediaType.TEXT_PLAIN_VALUE);
         // body Hello Spring
         Assertions.assertThat(res.getBody()).isEqualTo("Hello Spring");
+    }
+
+    @Test
+    void failsHelloApi() {
+        TestRestTemplate rest = new TestRestTemplate();
+        ResponseEntity<String> res = rest.getForEntity("http://localhost:8080/hello?name=", String.class);
+        Assertions.assertThat(res.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
